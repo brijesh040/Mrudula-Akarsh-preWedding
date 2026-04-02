@@ -813,27 +813,123 @@
   .reveal-delay-3 { transition-delay: 0.3s; }
 
   /* ─── RESPONSIVE ─── */
-  @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .story-grid {
-      grid-template-columns: 1fr;
-    }
-    .story-divider {
-      flex-direction: row;
-      padding: 0;
-    }
-    .story-vline {
-      width: 60px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-    .gallery-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-    .gallery-item.tall { grid-row: span 1; min-height: 180px; }
-    .rsvp-form { padding: 2rem 1.5rem; }
-    #music-player { bottom: 1.2rem; right: 1.2rem; }
+  /* ─── SPLASH SCREEN ─── */
+  #splash {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: linear-gradient(160deg, #2A0810 0%, #4A0E18 50%, #2A0810 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.9s ease, visibility 0.9s ease;
   }
+  #splash.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .splash-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='38' fill='none' stroke='rgba(201,146,42,0.07)' stroke-width='1'/%3E%3Ccircle cx='40' cy='40' r='28' fill='none' stroke='rgba(201,146,42,0.05)' stroke-width='0.5'/%3E%3Cpath d='M40 2 L42 38 L40 40 L38 38Z' fill='rgba(201,146,42,0.04)'/%3E%3Cpath d='M40 78 L42 42 L40 40 L38 42Z' fill='rgba(201,146,42,0.04)'/%3E%3Cpath d='M2 40 L38 42 L40 40 L38 38Z' fill='rgba(201,146,42,0.04)'/%3E%3Cpath d='M78 40 L42 38 L40 40 L42 42Z' fill='rgba(201,146,42,0.04)'/%3E%3C/svg%3E");
+    background-size: 80px 80px;
+  }
+  /* Corner ornaments on splash */
+  .splash-corner {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    opacity: 0.3;
+  }
+  .splash-corner.tl { top: 0; left: 0; }
+  .splash-corner.tr { top: 0; right: 0; transform: scaleX(-1); }
+  .splash-corner.bl { bottom: 0; left: 0; transform: scaleY(-1); }
+  .splash-corner.br { bottom: 0; right: 0; transform: scale(-1,-1); }
+  .splash-content {
+    position: relative;
+    text-align: center;
+    padding: 2rem;
+    animation: fadeUp 1.2s ease both;
+  }
+  .splash-pre {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1.5rem;
+    opacity: 0.85;
+  }
+  .splash-names {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(3rem, 9vw, 6.5rem);
+    color: var(--gold-light);
+    line-height: 1.05;
+    text-shadow: 0 0 60px rgba(201,146,42,0.35), 0 4px 20px rgba(0,0,0,0.5);
+  }
+  .splash-amp {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.8rem, 4vw, 3.5rem);
+    color: var(--gold-pale);
+    display: block;
+    margin: -0.3rem 0;
+    opacity: 0.8;
+  }
+  .splash-date {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-pale);
+    text-transform: uppercase;
+    margin-top: 1.5rem;
+    opacity: 0.8;
+  }
+  .splash-enter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-top: 3rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.4em;
+    color: var(--warm-white);
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--maroon), var(--deep-maroon));
+    border: 1px solid var(--gold);
+    padding: 1rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    animation: enter-pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes enter-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(201,146,42,0.4); }
+    50%       { box-shadow: 0 0 0 10px rgba(201,146,42,0); }
+  }
+  .splash-enter::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(201,146,42,0.2), transparent);
+    animation: shimmer 2.5s infinite;
+  }
+  @keyframes shimmer {
+    0%   { left: -100%; }
+    100% { left: 100%; }
+  }
+  .splash-note {
+    margin-top: 1.2rem;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: rgba(245,223,160,0.4);
+    letter-spacing: 0.05em;
+  }
+  .splash-note span { color: rgba(201,146,42,0.6); }
 
   /* ─── MUSIC PLAYER ─── */
   #music-player {
@@ -901,11 +997,80 @@
     0%   { transform: scale(1);   opacity: 0.8; }
     100% { transform: scale(1.6); opacity: 0; }
   }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .story-grid { grid-template-columns: 1fr; }
+    .story-divider { flex-direction: row; padding: 0; }
+    .story-vline { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    #music-player { bottom: 1.2rem; right: 1.2rem; }
+  }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- SPLASH SCREEN -->
+<div id="splash" onclick="enterSite()">
+  <div class="splash-pattern"></div>
+
+  <svg class="splash-corner tl" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 10 Q100 10 100 100" stroke="#C9922A" stroke-width="1.5"/>
+    <path d="M10 10 Q10 100 100 100" stroke="#C9922A" stroke-width="0.8" stroke-dasharray="4 4"/>
+    <circle cx="10" cy="10" r="5" fill="#C9922A"/>
+    <path d="M40 10 Q40 60 10 60" stroke="#C9922A" stroke-width="0.6" opacity="0.5"/>
+    <path d="M10 40 Q60 40 60 10" stroke="#C9922A" stroke-width="0.6" opacity="0.5"/>
+    <ellipse cx="25" cy="25" rx="10" ry="18" fill="rgba(201,146,42,0.07)" transform="rotate(-45 25 25)"/>
+  </svg>
+  <svg class="splash-corner tr" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 10 Q100 10 100 100" stroke="#C9922A" stroke-width="1.5"/>
+    <path d="M10 10 Q10 100 100 100" stroke="#C9922A" stroke-width="0.8" stroke-dasharray="4 4"/>
+    <circle cx="10" cy="10" r="5" fill="#C9922A"/>
+    <path d="M40 10 Q40 60 10 60" stroke="#C9922A" stroke-width="0.6" opacity="0.5"/>
+    <path d="M10 40 Q60 40 60 10" stroke="#C9922A" stroke-width="0.6" opacity="0.5"/>
+    <ellipse cx="25" cy="25" rx="10" ry="18" fill="rgba(201,146,42,0.07)" transform="rotate(-45 25 25)"/>
+  </svg>
+  <svg class="splash-corner bl" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 10 Q100 10 100 100" stroke="#C9922A" stroke-width="1.5"/>
+    <path d="M10 10 Q10 100 100 100" stroke="#C9922A" stroke-width="0.8" stroke-dasharray="4 4"/>
+    <circle cx="10" cy="10" r="5" fill="#C9922A"/>
+    <ellipse cx="25" cy="25" rx="10" ry="18" fill="rgba(201,146,42,0.07)" transform="rotate(-45 25 25)"/>
+  </svg>
+  <svg class="splash-corner br" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 10 Q100 10 100 100" stroke="#C9922A" stroke-width="1.5"/>
+    <path d="M10 10 Q10 100 100 100" stroke="#C9922A" stroke-width="0.8" stroke-dasharray="4 4"/>
+    <circle cx="10" cy="10" r="5" fill="#C9922A"/>
+    <ellipse cx="25" cy="25" rx="10" ry="18" fill="rgba(201,146,42,0.07)" transform="rotate(-45 25 25)"/>
+  </svg>
+
+  <div class="splash-content">
+    <span class="splash-pre">Shubhamastu · A Wedding Invitation</span>
+
+    <svg width="240" height="20" viewBox="0 0 240 20" fill="none" style="display:block;margin:0 auto 1.2rem;">
+      <line x1="0" y1="10" x2="85" y2="10" stroke="#C9922A" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.6"/>
+      <polygon points="90,10 94,6 98,10 94,14" fill="#C9922A" opacity="0.7"/>
+      <polygon points="104,10 108,5 112,10 108,15" fill="#C9922A"/>
+      <polygon points="118,10 122,4 126,10 122,16" fill="#C9922A"/>
+      <polygon points="132,10 136,5 140,10 136,15" fill="#C9922A"/>
+      <polygon points="146,10 150,6 154,10 150,14" fill="#C9922A" opacity="0.7"/>
+      <line x1="159" y1="10" x2="240" y2="10" stroke="#C9922A" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.6"/>
+    </svg>
+
+    <div class="splash-names">
+      Mrudula
+      <span class="splash-amp">&amp;</span>
+      Akarsh
+    </div>
+
+    <p class="splash-date">Friday · 1st May · 2026 · Bengaluru</p>
+
+    <div class="splash-enter">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" opacity="0.8"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      Open Invitation
+    </div>
+    <p class="splash-note">Tap to enter &amp; play <span>♪ Dheeni Premantara</span></p>
+  </div>
+</div>
 <nav>
   <div class="nav-logo">M & A</div>
   <ul class="nav-links">
@@ -1204,11 +1369,11 @@ function toggleMusic() {
   }
 }
 
-// Auto-play on first tap/click anywhere
-document.addEventListener('click', function startAudio() {
+// Splash screen — clicking it counts as user interaction, so music plays instantly
+function enterSite() {
+  document.getElementById('splash').classList.add('hide');
   audio.play().then(() => setPlaying(true)).catch(() => {});
-  document.removeEventListener('click', startAudio);
-}, { once: true });
+}
 </script>
 </body>
 </html>
